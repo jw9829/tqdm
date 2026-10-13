@@ -1552,6 +1552,13 @@ def test_colour_unknown():
             t.update()
 
 
+def test_colour_invalid_hex():
+    with warns(TqdmWarning, match="Unknown colour") as record:
+        with tqdm(total=1, colour="#00ff0g") as t:
+            assert record  # warned on construction
+            t.update()
+
+
 def test_closed_file(tmp_file):
     for i in trange(9, file=tmp_file, miniters=1, mininterval=0):
         if i == 5:
